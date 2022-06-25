@@ -1,3 +1,4 @@
+
 package hiber.service;
 
 import hiber.dao.UserDao;
@@ -26,4 +27,15 @@ public class UserServiceImp implements UserService {
       return userDao.listUsers();
    }
 
+   @Transactional
+   @Override
+   public void deleteAllUsers(){
+      userDao.deleteAllUsers();
+   }
+
+   @Transactional
+   @Override
+   public User findOwner(String car_name, String car_series) {
+      return userDao.findOwner(car_name, car_series);
+   }
 }
