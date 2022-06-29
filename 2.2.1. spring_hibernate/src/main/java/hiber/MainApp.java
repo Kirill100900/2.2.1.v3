@@ -43,7 +43,7 @@ public class MainApp {
          System.out.println();
       }
       System.out.println("Найти \"Porsche 911\"");
-      userService.findOwner("Porsche", "911");
+      System.out.println(userService.findOwner("Porsche", "911"));
       context.close();
    }
 }

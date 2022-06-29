@@ -1,6 +1,7 @@
 
 package hiber.dao;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import hiber.model.Car;
 import hiber.model.User;
 import org.hibernate.Hibernate;
@@ -44,20 +45,11 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public User findOwner(String car_name, String car_series) {
-      TypedQuery<Car> findCarQuery = sessionFactory.getCurrentSession().createQuery("from Car where name = :car_name and series = :car_series")
-              .setParameter("car_name", car_name)
-              .setParameter("car_series", car_series);
-      List<Car> findCarList = findCarQuery.getResultList();
-      if (!findCarList.isEmpty()) {
-         Car findCar = findCarList.get(0);
-         List<User> ListUser = listUsers();
-         User FindUser = ListUser.stream()
-                 .filter(user -> user.getCar().equals(findCar))
-                 .findAny()
-                 .orElse(null);
-         System.out.println(FindUser);
+      String hql = "from User user where user.car.name = :car_name and user.car.series = :car_series";
+      TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql);
+      query.setParameter("car_name",car_name).setParameter("car_series",car_series);
+      return  query.setMaxResults(1).getSingleResult();
 
       }
-      return null;
-   }
+
 }
