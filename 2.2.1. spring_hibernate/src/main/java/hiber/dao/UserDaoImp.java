@@ -55,7 +55,8 @@ public class UserDaoImp implements UserDao {
                  .filter(user -> user.getCar().equals(findCar))
                  .findAny()
                  .orElse(null);
-         return FindUser;
+         System.out.println(FindUser);
+
       }
       return null;
    }
